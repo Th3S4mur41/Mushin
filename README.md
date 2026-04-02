@@ -81,12 +81,25 @@ Mushin listens for GitHub webhook events and automatically merges Dependabot PRs
 
 ### Cloudflare Worker Secrets
 
-Set the following secrets using Wrangler:
+Set the following secrets using Wrangler (each command will prompt for the value interactively):
 
 ```bash
 wrangler secret put GITHUB_APP_ID
+# → Enter the numeric App ID when prompted, e.g.: 123456
+
 wrangler secret put GITHUB_WEBHOOK_SECRET
+# → Paste the webhook secret when prompted
+
 wrangler secret put GITHUB_PRIVATE_KEY
+# → Paste the full PKCS#8 PEM (including header/footer lines) when prompted
+```
+
+Or supply values non-interactively via stdin:
+
+```bash
+echo '123456' | wrangler secret put GITHUB_APP_ID
+echo 'my-webhook-secret' | wrangler secret put GITHUB_WEBHOOK_SECRET
+wrangler secret put GITHUB_PRIVATE_KEY < private-key-pkcs8.pem
 ```
 
 | Secret                  | Description                                                |

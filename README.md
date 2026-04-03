@@ -262,6 +262,21 @@ npm run dev
 npm run deploy
 ```
 
+### Dependabot metadata parser
+
+Mushin imports [`parse()`](https://github.com/dependabot/fetch-metadata/blob/main/src/dependabot/update_metadata.ts)
+directly from the [`dependabot/fetch-metadata`](https://github.com/dependabot/fetch-metadata) repository (installed via
+`"fetch-metadata": "github:dependabot/fetch-metadata"`), rather than vendoring a copy. This ensures the parser stays
+up to date and can be kept current by Dependabot itself.
+
+> **Note — `npm audit` false positive:** `npm audit` may report a critical advisory
+> ([GHSA-qg3v-mcf9-qc3m](https://github.com/advisories/GHSA-qg3v-mcf9-qc3m)) for a package named
+> `dependabot-pull-request-action`. This advisory refers to a malicious package that was published under that name on
+> the public npm registry. The package installed here comes directly from the
+> [`dependabot/fetch-metadata`](https://github.com/dependabot/fetch-metadata) GitHub repository — not from the npm
+> registry — so the advisory does not apply. The `dependabot/fetch-metadata` project uses the same package name in its
+> `package.json` (as a GitHub Action convention), which triggers the false positive.
+
 ### Project Structure
 
 ```
@@ -279,9 +294,7 @@ src/
 │   ├── api.ts                      # GitHub REST API client
 │   ├── auth.ts                     # GitHub App JWT + installation token auth
 │   └── types.ts                    # GitHub API response types
-└── vendor/
-    └── dependabot/
-        └── update_metadata.ts      # Vendored from dependabot/fetch-metadata (MIT)
+└── update-type.ts                  # Semver level helpers (imports parse() from fetch-metadata)
 
 test/
 ├── update-type.test.ts

@@ -13,6 +13,7 @@
     "lint": "tsc --noEmit"
   },
   "dependencies": {
+    "fetch-metadata": "github:dependabot/fetch-metadata",
     "yaml": "^2.4.5"
   },
   "devDependencies": {

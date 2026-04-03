@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { getHighestUpdateType, isUpdateLevelAllowed } from '../src/update-type';
-import type { updatedDependency } from '../src/vendor/dependabot/update_metadata';
+import type { updatedDependency } from 'fetch-metadata/src/dependabot/update_metadata';
 
 function makeDep(updateType: string): updatedDependency {
   return {

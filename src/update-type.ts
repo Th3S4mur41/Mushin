@@ -1,4 +1,4 @@
-import type { updatedDependency } from './vendor/dependabot/update_metadata';
+import type { updatedDependency } from 'fetch-metadata/src/dependabot/update_metadata';
 
 export type SemverLevel = 'major' | 'minor' | 'patch';
 

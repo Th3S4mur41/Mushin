@@ -1,4 +1,4 @@
-import { parse } from './vendor/dependabot/update_metadata';
+import { parse } from 'fetch-metadata/src/dependabot/update_metadata';
 import { getHighestUpdateType, isUpdateLevelAllowed } from './update-type';
 import { resolveConfig } from './config/index';
 import { upsertStatusComment, buildUnknownTypeMessage } from './comment';

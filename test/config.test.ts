@@ -11,7 +11,7 @@ function makeClient(overrides: Partial<GitHubClient> = {}): GitHubClient {
     createComment: vi.fn(),
     updateComment: vi.fn(),
     getCheckRuns: vi.fn(),
-    getCombinedStatus: vi.fn(),
+    getCommitStatuses: vi.fn(),
     mergePR: vi.fn(),
     getRepoCustomProperties: vi.fn().mockResolvedValue([]),
     getFileContent: vi.fn().mockResolvedValue(null),

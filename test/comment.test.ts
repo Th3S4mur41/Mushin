@@ -10,7 +10,7 @@ function makeClient(overrides: Partial<GitHubClient> = {}): GitHubClient {
     createComment: vi.fn().mockResolvedValue({ id: 1, body: '', user: { login: 'mushin[bot]' } }),
     updateComment: vi.fn().mockResolvedValue(undefined),
     getCheckRuns: vi.fn(),
-    getCombinedStatus: vi.fn(),
+    getCommitStatuses: vi.fn(),
     mergePR: vi.fn(),
     getRepoCustomProperties: vi.fn(),
     getFileContent: vi.fn(),

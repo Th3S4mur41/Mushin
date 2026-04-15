@@ -25,7 +25,7 @@ Mushin listens for GitHub webhook events and automatically merges Dependabot PRs
 
 - **Semver-level gating** — only auto-merge patch, minor, or major updates.
 - **Multi-source configuration** — GitHub custom properties (org/repo level), `.github/mushin.yml`, and PR labels, with label overrides taking highest precedence.
-- **CI gate** — only merges when all required checks pass.
+- **CI gate** — only merges when all required checks pass; neutral check-run conclusions are treated as non-blocking.
 - **Unknown update type handling** — posts an informative PR comment with upsert logic (no duplicate comments) when Dependabot metadata cannot be parsed.
 
 ---
@@ -210,7 +210,7 @@ Mushin will merge a Dependabot PR when **all** of the following are true:
 1. The PR is open and not a draft.
 2. The PR author is `dependabot[bot]`.
 3. The `skip` configuration is `false`.
-4. All CI checks and commit statuses are passing.
+4. All CI checks are complete with no failing conclusions, and any legacy commit statuses are not pending or failing. Neutral check-run conclusions are allowed.
 5. The semver update type (patch / minor / major) is within the configured `highest_version_to_merge` limit, **or** `merge_unknown` is `true` when the type is unknown.
 
 ### When Mushin skips a PR

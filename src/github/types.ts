@@ -38,7 +38,8 @@ export interface GitHubCheckRun {
   conclusion: string | null;
 }
 
-export interface GitHubStatusRollup {
+export interface GitHubCommitStatus {
+  context: string;
   state: 'success' | 'failure' | 'pending' | 'error';
 }
 

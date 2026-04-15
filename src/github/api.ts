@@ -3,6 +3,7 @@ import type {
   GitHubCommit,
   GitHubComment,
   GitHubCheckRun,
+  GitHubCommitStatus,
   GitHubCustomProperty,
 } from './types';
 
@@ -15,7 +16,7 @@ export interface GitHubClient {
   createComment(owner: string, repo: string, prNumber: number, body: string): Promise<GitHubComment>;
   updateComment(owner: string, repo: string, commentId: number, body: string): Promise<void>;
   getCheckRuns(owner: string, repo: string, ref: string): Promise<GitHubCheckRun[]>;
-  getCombinedStatus(owner: string, repo: string, ref: string): Promise<string>;
+  getCommitStatuses(owner: string, repo: string, ref: string): Promise<GitHubCommitStatus[]>;
   mergePR(owner: string, repo: string, prNumber: number, method: string, sha: string): Promise<boolean>;
   getRepoCustomProperties(owner: string, repo: string): Promise<GitHubCustomProperty[]>;
   getFileContent(owner: string, repo: string, path: string): Promise<string | null>;
@@ -79,12 +80,11 @@ export function createGitHubClient(token: string): GitHubClient {
       return data.check_runs;
     },
 
-    async getCombinedStatus(owner, repo, ref) {
-      const data = await request<{ state: string }>(
+    async getCommitStatuses(owner, repo, ref) {
+      return request<GitHubCommitStatus[]>(
         'GET',
-        `/repos/${owner}/${repo}/commits/${ref}/status`,
+        `/repos/${owner}/${repo}/commits/${ref}/statuses?per_page=100`,
       );
-      return data.state;
     },
 
     async mergePR(owner, repo, prNumber, method, sha) {

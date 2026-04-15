@@ -3,13 +3,13 @@ import { getHighestUpdateType, isUpdateLevelAllowed } from './update-type';
 import { resolveConfig } from './config/index';
 import { upsertStatusComment, buildUnknownTypeMessage } from './comment';
 import type { GitHubClient } from './github/api';
-import type { GitHubPR } from './github/types';
+import type { GitHubCommitStatus, GitHubPR } from './github/types';
 
 const DEPENDABOT_LOGIN = 'dependabot[bot]';
 
 /**
  * Determines whether all required checks for a PR head SHA are passing.
- * Returns true only if there are no failed/pending check runs and no failed statuses.
+ * Returns true only if there are no failed/pending check runs and no failed/pending legacy commit statuses.
  */
 async function areChecksPassing(
   client: GitHubClient,
@@ -17,9 +17,9 @@ async function areChecksPassing(
   repo: string,
   sha: string,
 ): Promise<boolean> {
-  const [checkRuns, combinedStatus] = await Promise.all([
+  const [checkRuns, commitStatuses] = await Promise.all([
     client.getCheckRuns(owner, repo, sha),
-    client.getCombinedStatus(owner, repo, sha),
+    client.getCommitStatuses(owner, repo, sha),
   ]);
 
   // If there are any incomplete or failed check runs, not ready
@@ -30,12 +30,15 @@ async function areChecksPassing(
     }
   }
 
-  // Combined commit status must be success or not set (no status checks at all = 'default' or empty)
-  if (combinedStatus === 'failure' || combinedStatus === 'error' || combinedStatus === 'pending') {
-    return false;
-  }
+  if (hasBlockingCommitStatus(commitStatuses)) return false;
 
   return true;
+}
+
+function hasBlockingCommitStatus(statuses: GitHubCommitStatus[]): boolean {
+  return statuses.some((status) => {
+    return status.state === 'failure' || status.state === 'error' || status.state === 'pending';
+  });
 }
 
 /**

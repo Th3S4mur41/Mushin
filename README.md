@@ -53,13 +53,13 @@ Mushin listens for GitHub webhook events and automatically merges Dependabot PRs
 
 ### Required Permissions
 
-| Permission        | Access       | Reason                               |
-|-------------------|--------------|--------------------------------------|
-| Pull requests     | Read & Write | Read PR data, merge PRs, comment     |
-| Contents          | Read         | Read `.github/mushin.yml`            |
-| Checks            | Read         | Verify CI checks before merging      |
-| Commit statuses   | Read         | Verify commit status before merging  |
-| Metadata          | Read         | Required for all GitHub Apps         |
+| Permission        | Access       | Reason                                                  |
+|-------------------|--------------|---------------------------------------------------------|
+| Pull requests     | Read & Write | Read PR data, merge PRs, comment                        |
+| Contents          | Read & Write | Read `.github/mushin.yml` and perform the merge commit  |
+| Checks            | Read         | Verify CI checks before merging                         |
+| Commit statuses   | Read         | Verify commit status before merging                     |
+| Metadata          | Read         | Required for all GitHub Apps                            |
 
 ### Required Webhook Events
 

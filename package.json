@@ -12,7 +12,8 @@
 		"test:coverage": "vitest run --coverage",
 		"lint": "npm run typecheck && biome ci",
 		"lint:fix": "npm run typecheck && biome check --write",
-		"prepare": "lefthook install"
+		"prepare": "lefthook install",
+		"release": "semantic-release"
 	},
 	"dependencies": {
 		"fetch-metadata": "github:dependabot/fetch-metadata",
@@ -23,8 +24,10 @@
 		"@cloudflare/workers-types": "^4.20241127.0",
 		"@commitlint/cli": "^20.5.0",
 		"@commitlint/config-conventional": "^20.5.0",
+		"@th3s4mur41/release-config": "^2.0.4",
 		"@vitest/coverage-v8": "^4.1.4",
 		"lefthook": "^2.1.6",
+		"semantic-release": "^25.0.3",
 		"typescript": "^6.0.3",
 		"vitest": "^4.1.4",
 		"wrangler": "^4.83.0"

@@ -17,8 +17,45 @@ concurrency:
 
 jobs:
 
-  deploy:
+  release:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+
+    environment: release
+
+    permissions:
+      attestations: write
+      contents: write
+      issues: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: '📦 Release'
+        id: release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN || secrets.GITHUB_TOKEN }} # Needed to push to GitHub
+        run: |
+          npm run release
+          echo "::set-output name=version::$(npm run env | grep npm_package_version | cut -d '=' -f 2)"
+
+  deploy:
+    needs: release
     runs-on: ubuntu-latest
 
     environment: production
@@ -45,4 +82,4 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ vars.CLOUDFLARE_ID }}
-          command: deploy --tag=production
+          command: deploy --tag=${{ needs.release.outputs.version }}

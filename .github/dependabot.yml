@@ -11,6 +11,9 @@ updates:
       interval: 'daily'
       time: '00:00'
       timezone: 'Europe/Berlin'
+    commit-message:
+      prefix: 'build'
+      prefix-development: 'chore'
     groups:
       commitlint:
         patterns:

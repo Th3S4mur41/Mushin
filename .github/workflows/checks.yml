@@ -1,0 +1,86 @@
+name: Checks
+
+permissions:
+  contents: read
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint-pr:
+    runs-on: ubuntu-latest
+
+    permissions:
+      pull-requests: write
+      contents: read
+
+    steps:
+      - name: '✅ Lint PR'
+        uses: Namchee/conventional-pr@v0.15.6
+        with:
+          access_token: ${{ secrets.GITHUB_TOKEN }}
+          label: '⁉️ invalid'
+          branch_pattern: ''
+          issue: false
+
+  dependency-review:
+    name: '⛓️ Dependency Review'
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'pull_request' }}
+
+    permissions:
+      pull-requests: write
+      contents: read
+
+    steps:
+      - name: '☁️ Checkout repository'
+        uses: actions/checkout@v6
+
+      - name: '🛡️ Dependency Review'
+        uses: actions/dependency-review-action@v4.9.0
+        with: 
+          comment-summary-in-pr: always
+
+  lint-and-build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      # - name: Build
+      #   run: npm run build
+
+      # - name: Upload build artifacts
+      #   uses: actions/upload-artifact@v7
+      #   with:
+      #     name: dist
+      #     path: dist/
+      #     retention-days: 1
+
+      - name: Test
+        run: npm run test:coverage

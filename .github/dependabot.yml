@@ -1,0 +1,36 @@
+# To get started with Dependabot version updates, you'll need to specify which
+# package ecosystems to update and where the package manifests are located.
+# Please see the documentation for all configuration options:
+# https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
+
+version: 2
+updates:
+  - package-ecosystem: 'npm'
+    directory: '/' # Location of package manifests
+    schedule:
+      interval: 'daily'
+      time: '00:00'
+      timezone: 'Europe/Berlin'
+    groups:
+      commitlint:
+        patterns:
+          - '@commitlint/*'
+      semantic-release:
+        patterns:
+          - 'semantic-release'
+          - '@th3s4mur41/release-config'
+      vitest:
+        patterns:
+          - 'vitest'
+          - '@vitest/*'
+
+  - package-ecosystem: 'github-actions'
+    directory: '/'
+    schedule:
+      interval: 'daily'
+      time: '00:00'
+      timezone: 'Europe/Berlin'
+    groups:
+      artifacts:
+        patterns:
+          - 'actions/*-artifact'

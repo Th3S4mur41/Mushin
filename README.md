@@ -277,31 +277,6 @@ up to date and can be kept current by Dependabot itself.
 > registry — so the advisory does not apply. The `dependabot/fetch-metadata` project uses the same package name in its
 > `package.json` (as a GitHub Action convention), which triggers the false positive.
 
-### Project Structure
-
-```
-src/
-├── index.ts                        # Worker entry point (fetch handler)
-├── health.ts                       # GET /health handler
-├── webhook.ts                      # POST /webhook handler + signature verification
-├── merge.ts                        # Core PR evaluation and merge logic
-├── comment.ts                      # PR comment upsert logic
-├── update-type.ts                  # Semver level helpers
-├── config/
-│   ├── index.ts                    # Config resolution (custom props → YAML → labels)
-│   └── types.ts                    # MushinConfig interface and defaults
-├── github/
-│   ├── api.ts                      # GitHub REST API client
-│   ├── auth.ts                     # GitHub App JWT + installation token auth
-│   └── types.ts                    # GitHub API response types
-└── update-type.ts                  # Semver level helpers (imports parse() from fetch-metadata)
-
-test/
-├── update-type.test.ts
-├── comment.test.ts
-└── config.test.ts
-```
-
 ---
 
 ## License

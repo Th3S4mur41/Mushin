@@ -16,9 +16,13 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+
   deploy:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
+
+    environment: production
+
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -41,4 +45,4 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ vars.CLOUDFLARE_ID }}
-          command: deploy --env=production --tag=production
+          command: deploy --tag=production

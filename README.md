@@ -269,7 +269,10 @@ directly from the [`dependabot/fetch-metadata`](https://github.com/dependabot/fe
 `"fetch-metadata": "github:dependabot/fetch-metadata"`), rather than vendoring a copy. This ensures the parser stays
 up to date and can be kept current by Dependabot itself.
 
-> **Note — `npm audit` false positive:** `npm audit` may report a critical advisory
+> [!Important] 
+> `npm audit` **false positive**  
+>
+> `npm audit` may report a critical advisory
 > ([GHSA-qg3v-mcf9-qc3m](https://github.com/advisories/GHSA-qg3v-mcf9-qc3m)) for a package named
 > `dependabot-pull-request-action`. This advisory refers to a malicious package that was published under that name on
 > the public npm registry. The package installed here comes directly from the

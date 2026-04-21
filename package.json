@@ -21,7 +21,7 @@
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^2.4.12",
-		"@cloudflare/workers-types": "^4.20241127.0",
+		"@cloudflare/workers-types": "^4.20260421.1",
 		"@commitlint/cli": "^20.5.0",
 		"@commitlint/config-conventional": "^20.5.0",
 		"@th3s4mur41/release-config": "^2.0.4",

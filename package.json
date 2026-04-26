@@ -22,7 +22,7 @@
 	"devDependencies": {
 		"@biomejs/biome": "^2.4.13",
 		"@cloudflare/workers-types": "^4.20260423.1",
-		"@commitlint/cli": "^20.5.0",
+		"@commitlint/cli": "^20.5.2",
 		"@commitlint/config-conventional": "^20.5.0",
 		"@th3s4mur41/release-config": "^2.0.4",
 		"@vitest/coverage-v8": "^4.1.5",

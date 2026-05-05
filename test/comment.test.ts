@@ -68,6 +68,18 @@ describe('upsertStatusComment', () => {
 		expect(client.createComment).toHaveBeenCalledOnce();
 		expect(client.updateComment).not.toHaveBeenCalled();
 	});
+
+	it('updates existing marker comment when app login differs but author is still a bot', async () => {
+		const existingBody = `<!-- mushin:status -->\n<!-- mushin:hash=00000000 -->\n\nOld message`;
+		const client = makeClient({
+			getAppLogin: vi.fn().mockResolvedValue('mushin[bot]'),
+			getPRComments: vi.fn().mockResolvedValue([{ id: 99, body: existingBody, user: { login: 'mushin-app[bot]' } }]),
+		});
+
+		await upsertStatusComment(client, 'owner', 'repo', 1, 'New message');
+		expect(client.updateComment).toHaveBeenCalledWith('owner', 'repo', 99, expect.stringContaining('New message'));
+		expect(client.createComment).not.toHaveBeenCalled();
+	});
 });
 
 describe('buildUnknownTypeMessage', () => {

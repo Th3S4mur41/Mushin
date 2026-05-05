@@ -26,12 +26,28 @@ async function findStatusComment(
 	botLogin: string,
 ): Promise<{ id: number; body: string } | null> {
 	const comments = await client.getPRComments(owner, repo, prNumber);
-	for (const comment of comments) {
-		if (comment.user.login === botLogin && comment.body.includes(STATUS_MARKER)) {
+	const normalizedBotLogin = botLogin.toLowerCase();
+	let fallbackBotComment: { id: number; body: string } | null = null;
+
+	// Iterate newest-first so we update the most recent status comment.
+	for (let i = comments.length - 1; i >= 0; i--) {
+		const comment = comments[i];
+		if (!comment.body.includes(STATUS_MARKER)) {
+			continue;
+		}
+
+		const commentLogin = comment.user.login.toLowerCase();
+		if (commentLogin === normalizedBotLogin) {
 			return { id: comment.id, body: comment.body };
 		}
+
+		// Fallback: if app slug/login changed, still reuse an existing bot-authored marker comment.
+		if (!fallbackBotComment && commentLogin.endsWith('[bot]')) {
+			fallbackBotComment = { id: comment.id, body: comment.body };
+		}
 	}
-	return null;
+
+	return fallbackBotComment;
 }
 
 /**

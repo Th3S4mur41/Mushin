@@ -16,7 +16,7 @@
 		"release": "semantic-release"
 	},
 	"dependencies": {
-		"fetch-metadata": "github:dependabot/fetch-metadata",
+		"fetch-metadata": "github:dependabot/fetch-metadata#v3.1.0",
 		"yaml": "^2.9.0"
 	},
 	"devDependencies": {

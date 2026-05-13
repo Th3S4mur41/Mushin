@@ -22,8 +22,8 @@
 	"devDependencies": {
 		"@biomejs/biome": "^2.4.15",
 		"@cloudflare/workers-types": "^4.20260511.1",
-		"@commitlint/cli": "^21.0.0",
-		"@commitlint/config-conventional": "^21.0.0",
+		"@commitlint/cli": "^21.0.1",
+		"@commitlint/config-conventional": "^21.0.1",
 		"@th3s4mur41/release-config": "^2.0.4",
 		"@vitest/coverage-v8": "^4.1.6",
 		"lefthook": "^2.1.6",

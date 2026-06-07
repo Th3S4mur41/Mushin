@@ -25,7 +25,7 @@ jobs:
 
     steps:
       - name: '✅ Lint PR'
-        uses: Namchee/conventional-pr@v0.15.6
+        uses: Namchee/conventional-pr@v0.16.0
         with:
           access_token: ${{ secrets.GITHUB_TOKEN }}
           label: '⁉️ invalid'

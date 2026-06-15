@@ -25,7 +25,7 @@
 		"@commitlint/cli": "^21.0.2",
 		"@commitlint/config-conventional": "^21.0.2",
 		"@th3s4mur41/release-config": "^2.0.4",
-		"@vitest/coverage-v8": "^4.1.8",
+		"@vitest/coverage-v8": "^4.1.9",
 		"lefthook": "^2.1.9",
 		"semantic-release": "^25.0.5",
 		"typescript": "^6.0.3",

@@ -28,7 +28,7 @@
 		"@vitest/coverage-v8": "^4.1.10",
 		"lefthook": "^2.1.10",
 		"semantic-release": "^25.0.5",
-		"typescript": "^6.0.3",
+		"typescript": "^7.0.2",
 		"vitest": "^4.1.4",
 		"wrangler": "^4.108.0"
 	}

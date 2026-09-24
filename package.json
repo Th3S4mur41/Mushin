@@ -30,7 +30,7 @@
 		"semantic-release": "^25.0.9",
 		"typescript": "^7.0.2",
 		"vitest": "^5.0.0",
-		"wrangler": "^4.135.0"
+		"wrangler": "^4.136.1"
 	},
 	"allowScripts": {
 		"esbuild": true,

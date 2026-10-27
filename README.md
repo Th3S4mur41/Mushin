@@ -22,7 +22,6 @@ Mushin is a **GitHub App** implemented as a **Cloudflare Worker** that automatic
 ## Overview
 
 Mushin listens for GitHub webhook events and automatically merges Dependabot PRs based on configurable rules. It supports:
-
 - **Semver-level gating** — only auto-merge patch, minor, or major updates.
 - **Multi-source configuration** — GitHub custom properties (org/repo level), `.github/mushin.yml`, and PR labels, with label overrides taking highest precedence.
 - **CI gate** — only merges when all required checks pass; neutral check-run conclusions are treated as non-blocking.
@@ -53,21 +52,21 @@ Mushin listens for GitHub webhook events and automatically merges Dependabot PRs
 
 ### Required Permissions
 
-| Permission        | Access       | Reason                                                  |
-|-------------------|--------------|---------------------------------------------------------|
-| Pull requests     | Read & Write | Read PR data, merge PRs, comment                        |
-| Contents          | Read & Write | Read `.github/mushin.yml` and perform the merge commit  |
-| Checks            | Read         | Verify CI checks before merging                         |
-| Commit statuses   | Read         | Verify commit status before merging                     |
-| Metadata          | Read         | Required for all GitHub Apps                            |
+| Permission      | Access       | Reason                                                 |
+| --------------- | ------------ | ------------------------------------------------------ |
+| Pull requests   | Read & Write | Read PR data, merge PRs, comment                       |
+| Contents        | Read & Write | Read `.github/mushin.yml` and perform the merge commit |
+| Checks          | Read         | Verify CI checks before merging                        |
+| Commit statuses | Read         | Verify commit status before merging                    |
+| Metadata        | Read         | Required for all GitHub Apps                           |
 
 ### Required Webhook Events
 
-| Event          | Reason                                                |
-|----------------|-------------------------------------------------------|
-| `pull_request` | Triggered when a PR is opened, reopened, or updated  |
-| `check_suite`  | Triggered when a suite of CI checks completes        |
-| `check_run`    | Triggered when an individual CI check completes      |
+| Event          | Reason                                              |
+| -------------- | --------------------------------------------------- |
+| `pull_request` | Triggered when a PR is opened, reopened, or updated |
+| `check_suite`  | Triggered when a suite of CI checks completes       |
+| `check_run`    | Triggered when an individual CI check completes     |
 
 ---
 
@@ -102,11 +101,11 @@ echo 'my-webhook-secret' | wrangler secret put GITHUB_WEBHOOK_SECRET
 wrangler secret put GITHUB_PRIVATE_KEY < private-key-pkcs8.pem
 ```
 
-| Secret                  | Description                                                |
-|-------------------------|------------------------------------------------------------|
-| `GITHUB_APP_ID`         | The numeric GitHub App ID shown on your App settings page  |
-| `GITHUB_WEBHOOK_SECRET` | The webhook secret configured in your GitHub App           |
-| `GITHUB_PRIVATE_KEY`    | The PKCS#8 PEM private key (see conversion below)          |
+| Secret                  | Description                                               |
+| ----------------------- | --------------------------------------------------------- |
+| `GITHUB_APP_ID`         | The numeric GitHub App ID shown on your App settings page |
+| `GITHUB_WEBHOOK_SECRET` | The webhook secret configured in your GitHub App          |
+| `GITHUB_PRIVATE_KEY`    | The PKCS#8 PEM private key (see conversion below)         |
 
 ### Private Key Conversion
 
@@ -141,7 +140,6 @@ After deployment, configure the Webhook URL in your GitHub App settings to point
 ## Configuration
 
 Mushin supports three configuration sources, applied with the following precedence (highest to lowest):
-
 1. **PR labels** — highest precedence, per-PR overrides
 2. **`.github/mushin.yml`** — repo-level configuration
 3. **GitHub custom properties** — org/repo-level defaults
@@ -150,12 +148,12 @@ Mushin supports three configuration sources, applied with the following preceden
 
 Configure at the organization or repository level via **Settings → Custom properties**.
 
-| Property Name                       | Allowed Values              | Default  | Description                                     |
-|-------------------------------------|-----------------------------|----------|-------------------------------------------------|
-| `mushin_highest_version_to_merge`   | `patch`, `minor`, `major`   | `minor`  | Highest semver update level to auto-merge       |
-| `mushin_merge_unknown`              | `true`, `false`             | `false`  | Merge PRs when the update type cannot be parsed |
-| `mushin_merge_method`               | `merge`, `squash`, `rebase` | `squash` | Git merge method to use                         |
-| `mushin_skip`                       | `true`, `false`             | `false`  | Skip all Dependabot PRs in this repo            |
+| Property Name                     | Allowed Values              | Default  | Description                                     |
+| --------------------------------- | --------------------------- | -------- | ----------------------------------------------- |
+| `mushin_highest_version_to_merge` | `patch`, `minor`, `major`   | `minor`  | Highest semver update level to auto-merge       |
+| `mushin_merge_unknown`            | `true`, `false`             | `false`  | Merge PRs when the update type cannot be parsed |
+| `mushin_merge_method`             | `merge`, `squash`, `rebase` | `squash` | Git merge method to use                         |
+| `mushin_skip`                     | `true`, `false`             | `false`  | Skip all Dependabot PRs in this repo            |
 
 ### Repo Config File (`.github/mushin.yml`)
 
@@ -185,13 +183,13 @@ skip: false
 
 Add labels directly to a Dependabot PR to override configuration on a per-PR basis.
 
-| Label                  | Effect                                                               |
-|------------------------|----------------------------------------------------------------------|
-| `mushin:skip`          | Mushin will not attempt to merge this PR                            |
-| `mushin:merge-unknown` | Merge even if the semver update type cannot be determined           |
+| Label                  | Effect                                                                 |
+| ---------------------- | ---------------------------------------------------------------------- |
+| `mushin:skip`          | Mushin will not attempt to merge this PR                               |
+| `mushin:merge-unknown` | Merge even if the semver update type cannot be determined              |
 | `mushin:merge-major`   | Allow major updates for this PR (overrides `highest_version_to_merge`) |
-| `mushin:merge-minor`   | Allow up to minor updates for this PR                               |
-| `mushin:merge-patch`   | Allow only patch updates for this PR                                |
+| `mushin:merge-minor`   | Allow up to minor updates for this PR                                  |
+| `mushin:merge-patch`   | Allow only patch updates for this PR                                   |
 
 ### Precedence
 
@@ -206,7 +204,6 @@ PR labels  >  .github/mushin.yml  >  GitHub custom properties  >  built-in defau
 ### When Mushin merges a PR
 
 Mushin will merge a Dependabot PR when **all** of the following are true:
-
 1. The PR is open and not a draft.
 2. The PR author is `dependabot[bot]`.
 3. The `skip` configuration is `false`.
@@ -224,7 +221,6 @@ Mushin will merge a Dependabot PR when **all** of the following are true:
 ### Comment behavior
 
 When Mushin cannot determine the semver update type **and** `merge_unknown` is `false`, it posts a comment on the PR explaining:
-
 - Why it did not merge.
 - How to resolve the issue (wait, label override, config override, or skip).
 

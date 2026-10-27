@@ -24,16 +24,16 @@ jobs:
       contents: read
 
     steps:
-      - name: '✅ Lint PR'
+      - name: "✅ Lint PR"
         uses: Namchee/conventional-pr@130d7ab18df28e92ff803e37bfdf0600fb2a318e # v0.16.0
         with:
           access_token: ${{ secrets.GITHUB_TOKEN }}
-          label: '⁉️ invalid'
-          branch_pattern: ''
+          label: "⁉️ invalid"
+          branch_pattern: ""
           issue: false
 
   dependency-review:
-    name: '⛓️ Dependency Review'
+    name: "⛓️ Dependency Review"
     runs-on: ubuntu-latest
     if: ${{ github.event_name == 'pull_request' }}
 
@@ -42,12 +42,12 @@ jobs:
       contents: read
 
     steps:
-      - name: '☁️ Checkout repository'
+      - name: "☁️ Checkout repository"
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      - name: '🛡️ Dependency Review'
+      - name: "🛡️ Dependency Review"
         uses: actions/dependency-review-action@a1d282b36b6f3519aa1f3fc636f609c47dddb294 # v5.0.0
-        with: 
+        with:
           comment-summary-in-pr: always
 
   lint-and-build:
@@ -63,8 +63,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
-          node-version-file: '.nvmrc'
-          cache: 'npm'
+          node-version-file: ".nvmrc"
+          cache: "npm"
 
       - name: Install dependencies
         run: npm ci

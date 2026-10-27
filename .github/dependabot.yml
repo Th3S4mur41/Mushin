@@ -5,35 +5,35 @@
 
 version: 2
 updates:
-  - package-ecosystem: 'npm'
-    directory: '/' # Location of package manifests
+  - package-ecosystem: "npm"
+    directory: "/" # Location of package manifests
     schedule:
-      interval: 'daily'
-      time: '00:00'
-      timezone: 'Europe/Berlin'
+      interval: "daily"
+      time: "00:00"
+      timezone: "Europe/Berlin"
     commit-message:
-      prefix: 'build'
-      prefix-development: 'chore'
+      prefix: "build"
+      prefix-development: "chore"
     groups:
       commitlint:
         patterns:
-          - '@commitlint/*'
+          - "@commitlint/*"
       semantic-release:
         patterns:
-          - 'semantic-release'
-          - '@th3s4mur41/release-config'
+          - "semantic-release"
+          - "@th3s4mur41/release-config"
       vitest:
         patterns:
-          - 'vitest'
-          - '@vitest/*'
+          - "vitest"
+          - "@vitest/*"
 
-  - package-ecosystem: 'github-actions'
-    directory: '/'
+  - package-ecosystem: "github-actions"
+    directory: "/"
     schedule:
-      interval: 'daily'
-      time: '00:00'
-      timezone: 'Europe/Berlin'
+      interval: "daily"
+      time: "00:00"
+      timezone: "Europe/Berlin"
     groups:
       artifacts:
         patterns:
-          - 'actions/*-artifact'
+          - "actions/*-artifact"

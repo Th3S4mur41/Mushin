@@ -22,6 +22,7 @@ Mushin is a **GitHub App** implemented as a **Cloudflare Worker** that automatic
 ## Overview
 
 Mushin listens for GitHub webhook events and automatically merges Dependabot PRs based on configurable rules. It supports:
+
 - **Semver-level gating** — only auto-merge patch, minor, or major updates.
 - **Multi-source configuration** — GitHub custom properties (org/repo level), `.github/mushin.yml`, and PR labels, with label overrides taking highest precedence.
 - **CI gate** — only merges when all required checks pass; neutral check-run conclusions are treated as non-blocking.
@@ -140,6 +141,7 @@ After deployment, configure the Webhook URL in your GitHub App settings to point
 ## Configuration
 
 Mushin supports three configuration sources, applied with the following precedence (highest to lowest):
+
 1. **PR labels** — highest precedence, per-PR overrides
 2. **`.github/mushin.yml`** — repo-level configuration
 3. **GitHub custom properties** — org/repo-level defaults
@@ -204,6 +206,7 @@ PR labels  >  .github/mushin.yml  >  GitHub custom properties  >  built-in defau
 ### When Mushin merges a PR
 
 Mushin will merge a Dependabot PR when **all** of the following are true:
+
 1. The PR is open and not a draft.
 2. The PR author is `dependabot[bot]`.
 3. The `skip` configuration is `false`.
@@ -221,10 +224,12 @@ Mushin will merge a Dependabot PR when **all** of the following are true:
 ### Comment behavior
 
 When Mushin cannot determine the semver update type **and** `merge_unknown` is `false`, it posts a comment on the PR explaining:
+
 - Why it did not merge.
 - How to resolve the issue (wait, label override, config override, or skip).
 
 Mushin uses **upsert logic** for comments:
+
 - If no Mushin comment exists on the PR, it creates one.
 - If a comment already exists with the same content (checked via FNV-1a hash), it is **not** updated (avoiding unnecessary notifications).
 - If the content has changed, the existing comment is updated in place.
